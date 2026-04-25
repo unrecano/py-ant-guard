@@ -19,11 +19,7 @@ from unittest.mock import AsyncMock, MagicMock, call, patch
 import pytest
 from pydantic import ValidationError
 
-from src.shared.models import Budget, Transaction, TransactionType
-
-# ---------------------------------------------------------------------------
-# Model unit tests — no fixtures, no mocks, pure Pydantic validation
-# ---------------------------------------------------------------------------
+from shared.models import Budget, Transaction, TransactionType
 
 
 def test_transaction_valid_construction() -> None:
@@ -162,9 +158,9 @@ async def test_ensure_indexes_creates_expected_indexes() -> None:
 
     mock_db = MagicMock()
     mock_db.__getitem__ = MagicMock(
-        side_effect=lambda name: mock_transactions
-        if name == "transactions"
-        else mock_budgets
+        side_effect=lambda name: (
+            mock_transactions if name == "transactions" else mock_budgets
+        )
     )
 
     from src.shared.database import ensure_indexes

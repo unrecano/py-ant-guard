@@ -19,9 +19,14 @@ dev = [
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+pythonpath = ["src"]
 
 [tool.ruff]
 target-version = "py312"
+src = ["src"]
 
 [tool.ruff.lint]
 select = ["E", "F", "B", "I", "UP"]
+
+[tool.ty.environment]
+extra-paths = ["src"]
