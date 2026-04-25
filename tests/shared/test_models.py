@@ -110,11 +110,6 @@ def test_budget_decimal_precision_preserved() -> None:
     assert budget.monthly_limit == precise
 
 
-# ---------------------------------------------------------------------------
-# Database unit tests — mock Motor client, no real MongoDB
-# ---------------------------------------------------------------------------
-
-
 @pytest.mark.asyncio
 async def test_init_db_returns_default_database() -> None:
     """init_db must return the database obtained from get_default_database."""
@@ -125,7 +120,7 @@ async def test_init_db_returns_default_database() -> None:
 
     with patch("src.shared.database.AsyncIOMotorClient", return_value=mock_client):
         with patch("src.shared.database.ensure_indexes", new_callable=AsyncMock):
-            from src.shared.database import init_db
+            from shared.database import init_db
 
             result = await init_db("mongodb://localhost:27017/ant_guard")
 
@@ -143,7 +138,7 @@ async def test_init_db_calls_ensure_indexes() -> None:
         with patch(
             "src.shared.database.ensure_indexes", new_callable=AsyncMock
         ) as mock_ensure:
-            from src.shared.database import init_db
+            from shared.database import init_db
 
             await init_db("mongodb://localhost:27017/ant_guard")
 
@@ -163,7 +158,7 @@ async def test_ensure_indexes_creates_expected_indexes() -> None:
         )
     )
 
-    from src.shared.database import ensure_indexes
+    from shared.database import ensure_indexes
 
     await ensure_indexes(mock_db)
 
