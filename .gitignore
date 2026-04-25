@@ -1,0 +1,51 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Environments
+.env
+.venv/
+env/
+venv/
+ENV/
+
+# Tooling and Caches
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# IDEs and OS files
+.vscode/
+.idea/
+__pycache__/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Ignore pre-commit cache
+.pre-commit-config.yaml.bak
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Type checker cache (ty or others)
+.typeguard/
+
+# specs folder
+specs/
