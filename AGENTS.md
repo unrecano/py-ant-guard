@@ -1,4 +1,4 @@
-# AntGuard (FinPulse) - Agent Instructions
+# AntGuard - Agent Instructions
 
 This document provides context, rules, and guidelines for AI agents interacting with the AntGuard repository.
 

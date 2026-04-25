@@ -1,4 +1,4 @@
-# AntGuard (FinPulse)
+# AntGuard
 
 AntGuard is a high-performance, decoupled microservices ecosystem designed for personal finance and budget management. It features an asynchronous Telegram bot for rapid transaction entry and a Streamlit dashboard for financial visualization.
 
