@@ -1,0 +1,13 @@
+transport: transport
+bus: transport
+uber: transport
+café: snacks
+coffee: snacks
+snacks: snacks
+galleta: snacks
+cine: entertainment
+ps5: entertainment
+netflix: entertainment
+bar: outings
+cena: outings
+restaurante: outings
