@@ -12,6 +12,14 @@ repos:
         language: system
         types: [python]
         pass_filenames: true
+      - id: pytest
+        name: pytest
+        entry: uv run pytest -m "not integration"
+        language: system
+        types: [python]
+        pass_filenames: false
+        always_run: true
+        stages: [pre-push]
   - repo: https://github.com/compilerla/conventional-pre-commit
     rev: v3.4.0
     hooks:

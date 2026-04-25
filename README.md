@@ -13,7 +13,7 @@ The primary goal of AntGuard is to provide a frictionless experience for trackin
 - **Code Quality**: `ruff` acting as the unified linter and formatter.
 - **Telegram Client**: Custom asynchronous client built directly on `httpx` (no heavy external SDKs/frameworks).
 - **Visualization**: Streamlit, secured with a simple authentication layer.
-- **Database & Persistence**: MongoDB Atlas, modeled with Beanie ODM (object-document mapper built on Pydantic v2).
+- **Database & Persistence**: MongoDB Atlas, accessed via **Motor** (`motor.motor_asyncio`) with pure **Pydantic v2** models for data validation and serialization.
 - **Orchestration**: Docker and Docker Compose.
 - **Automation**: `Makefile` and `pre-commit` hooks (validating formatting, typing, and Conventional Commits).
 
@@ -23,7 +23,7 @@ AntGuard follows a decoupled microservices architecture deployed via Docker Comp
 
 1. **Bot Service**: Processes Telegram messages using an internal Regex engine.
 2. **Dashboard Service**: Serves the Streamlit web interface.
-3. **Shared Models**: Common Pydantic/Beanie models shared between the Bot and the Dashboard.
+3. **Shared Models**: Common Pydantic `BaseModel` subclasses shared between the Bot and the Dashboard. No ODM — Motor is used directly for database access.
 4. **MongoDB**: The central database storing all transactions and state.
 
 ## Local Setup
@@ -85,3 +85,31 @@ All commits are gated by strict `pre-commit` hooks to ensure high quality:
 - `conventional-pre-commit` for commit message standard adherence.
 
 Every push will eventually be gated by a `pytest` suite execution.
+
+## Testing & Documentation Standards
+
+### Testing
+
+- **Test functions, not classes**: Every test case is a standalone `def test_*` or `async def test_*` function.
+- **Unit tests**: Exercise a single function in isolation — mock all external dependencies (DB, HTTP, env vars).
+- **Integration tests**: Require a running service or real database. Place them in `tests/integration/` and mark with `@pytest.mark.integration`.
+- **One behavior per test**: Keep each test focused on a single assertion or behavior for self-documenting failures.
+
+### Docstrings
+
+All public functions and methods require a docstring following Google style, with these sections when applicable:
+
+```python
+def my_function(param: str) -> int:
+    """Short one-line summary.
+
+    Args:
+        param: Description of the parameter.
+
+    Returns:
+        Description of the return value.
+
+    Raises:
+        ValueError: When and why this is raised.
+    """
+```

@@ -1,3 +1,8 @@
+---
+trigger: always_on 
+description: This document provides context, rules, and guidelines for AI agents interacting with the AntGuard repository.
+---
+
 # AntGuard - Agent Instructions
 
 This document provides context, rules, and guidelines for AI agents interacting with the AntGuard repository.
@@ -18,8 +23,8 @@ This document provides context, rules, and guidelines for AI agents interacting 
 ## 2. Architectural Guidelines
 
 - **Microservices Structure**: The project is split into decoupled services (`src/bot`, `src/dashboard`) that communicate via a shared database.
-- **Shared Models**: Database and Pydantic models MUST reside in `src/shared` to avoid duplication. The models are mapped using **Beanie ODM**.
-- **Financial Precision**: You MUST use `Decimal128` (from `bson.decimal128` and `decimal.Decimal`) for all currency/monetary amounts to prevent float rounding errors.
+- **Shared Models**: Data contracts and Pydantic models MUST reside in `src/shared` to avoid duplication. Models are **pure Pydantic `BaseModel`** subclasses — no ODM coupling. Database access uses **Motor** (`motor.motor_asyncio`) directly.
+- **Financial Precision**: You MUST use `Decimal` (from Python's `decimal` module) for all currency/monetary amounts to prevent float rounding errors.
 
 ## 3. Bot Development Rules
 
@@ -37,3 +42,19 @@ This document provides context, rules, and guidelines for AI agents interacting 
 - The application is deployed using Docker Compose with a unified multi-stage `Dockerfile`.
 - When modifying dependencies or entry points, ensure the `Dockerfile` and `docker-compose.yml` remain compatible.
 - The default development orchestration is executed via `make dev`.
+
+## 6. Testing Standards
+
+- **Test functions, not classes**: Every test case MUST be a standalone `def test_*` or `async def test_*` function. Do not group tests inside classes.
+- **Unit tests**: Test a single function or unit in isolation. External dependencies (databases, HTTP, env vars) MUST be mocked with `unittest.mock`.
+- **Integration tests**: Only when the full service or a real database is required. Place them in `tests/integration/` and annotate with `@pytest.mark.integration`.
+- **One assertion per test (preferred)**: Each test function should validate one specific behavior to make failures self-documenting.
+
+## 7. Code Documentation Standards
+
+- **All public functions and methods MUST have a docstring** following Google style.
+- Docstrings MUST include the following sections when applicable:
+  - `Args`: describe every parameter.
+  - `Returns`: describe the return value and its type semantics.
+  - `Raises`: document every exception the function can raise intentionally.
+- One-liner docstrings are acceptable only for trivially obvious helpers.
