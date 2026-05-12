@@ -118,8 +118,8 @@ async def test_init_db_returns_default_database() -> None:
     mock_client = MagicMock()
     mock_client.get_default_database.return_value = mock_db
 
-    with patch("src.shared.database.AsyncIOMotorClient", return_value=mock_client):
-        with patch("src.shared.database.ensure_indexes", new_callable=AsyncMock):
+    with patch("shared.database.AsyncIOMotorClient", return_value=mock_client):
+        with patch("shared.database.ensure_indexes", new_callable=AsyncMock):
             from shared.database import init_db
 
             result = await init_db("mongodb://localhost:27017/ant_guard")
@@ -134,9 +134,9 @@ async def test_init_db_calls_ensure_indexes() -> None:
     mock_client = MagicMock()
     mock_client.get_default_database.return_value = mock_db
 
-    with patch("src.shared.database.AsyncIOMotorClient", return_value=mock_client):
+    with patch("shared.database.AsyncIOMotorClient", return_value=mock_client):
         with patch(
-            "src.shared.database.ensure_indexes", new_callable=AsyncMock
+            "shared.database.ensure_indexes", new_callable=AsyncMock
         ) as mock_ensure:
             from shared.database import init_db
 

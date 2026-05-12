@@ -41,6 +41,6 @@ class Budget(BaseModel):
     id: ObjectId | None = Field(default=None, alias="_id")
     category: str
     monthly_limit: Decimal
-    alert_threshold: float | None = None
+    alert_threshold: float = 0.8
 
     model_config = {"arbitrary_types_allowed": True, "populate_by_name": True}
